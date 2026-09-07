@@ -7,7 +7,7 @@ sente:
   schedule: ""
   cwd: ~/workspace/sente-intro-video
   task: |
-    ./make.sh を実行して 30秒と15秒の紹介動画を作り直して。ナレーションは KOE_USER_ID=yukihamada(本人の声)。
+    ./make.sh を実行して 30秒と15秒の紹介動画を作り直して(録画は同梱のものを使う既定で良い。撮り直しは SKIP_RECORD=0)。ナレーションは KOE_USER_ID=yukihamada(本人の声)。
     数字は facts.json の実測値だけを使い、盛らない。失敗した段があれば原因を直してその段から再実行。
     終わったら out/ の2本のパスと長さ、work/v30/timeline.json の heard(Whisper の読み確認)を1行ずつ報告して。
 ---

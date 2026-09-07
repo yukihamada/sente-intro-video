@@ -21,9 +21,10 @@ if has deps; then step "deps"
   xcode-select -p >/dev/null || { echo "Xcode が必要"; exit 2; }
 fi
 
-# 録画済み(work/footage/*.mp4 同梱)があれば app/record は飛ばせる: SKIP_RECORD=1(sente-ios を持たない人はこちら)
-if [ "${SKIP_RECORD:-0}" = 1 ] && ls work/footage/phone_a.mp4 work/footage/phone_b.mp4 work/footage/phone_c.mp4 >/dev/null 2>&1; then
-  STEPS=("${STEPS[@]/app}"); STEPS=("${STEPS[@]/record}"); echo "SKIP_RECORD=1: 同梱の録画を使う"
+# 録画(work/footage/*.mp4)はリポジトリに同梱。既定ではそれを使い app/record を飛ばす(sente-ios は非公開のため)。
+# 撮り直す人だけ SKIP_RECORD=0(要: Xcode + sente-ios の checkout)。
+if [ "${SKIP_RECORD:-1}" = 1 ] && ls work/footage/phone_a.mp4 work/footage/phone_b.mp4 work/footage/phone_c.mp4 >/dev/null 2>&1; then
+  STEPS=("${STEPS[@]/app}"); STEPS=("${STEPS[@]/record}"); echo "同梱の録画を使う(撮り直し=SKIP_RECORD=0)"
 fi
 
 if has app; then step "Sente iOS をシミュレータ向けにビルド ($SENTE_IOS)"

@@ -19,7 +19,7 @@ html,body{margin:0;width:1080px;height:1920px;background:transparent;font-family
 .cap{font-family:JPB;font-size:64px;line-height:1.22;letter-spacing:-.01em;text-wrap:balance;font-weight:800}
 .sub{font-size:40px;line-height:1.35;color:var(--dim)}
 .eyebrow{font-size:30px;letter-spacing:.18em;color:var(--accent);text-transform:uppercase;font-family:var(--mono)}
-.brand{position:absolute;top:96px;left:72px;display:flex;align-items:center;gap:20px}
+.brand{position:absolute;top:84px;left:72px;display:flex;align-items:center;gap:20px}
 .brand .mark{width:26px;height:26px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 10px rgba(91,140,255,.18)}
 .brand .name{font-family:JPB;font-size:38px;letter-spacing:.06em}
 .brand .en{font-family:var(--mono);font-size:26px;color:var(--dim);margin-left:6px}

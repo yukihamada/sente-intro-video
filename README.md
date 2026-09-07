@@ -23,6 +23,8 @@ KOE_USER_ID=<koe.live のあなたのID> ./make.sh
 ```
 
 `KOE_USER_ID` を省くと macOS の `say` が代読します(本人の声ではない旨が timeline.json に残ります)。
+実画面の録画(`work/footage/*.mp4`)はリポジトリに同梱しているので、**Xcode や sente-ios(非公開)が無くても上のコマンドだけで完成**します。
+撮り直す場合だけ `SKIP_RECORD=0 SENTE_IOS=<sente-ios の checkout> ./make.sh`(Xcode が必要)。
 
 ## 先手に頼むなら(この動画はこのプロンプトで作りました)
 

@@ -10,7 +10,7 @@ BG = "0x0D131F"
 FOOT = ROOT / "work" / "footage"; CARDS = ROOT / "work" / "cards"; OUT = ROOT / "out"; OUT.mkdir(exist_ok=True)
 ACTION_S = 4.2          # seconds of real action (prompt → send → result) to show from the end of a clip
 PHONE_H = int(H * 0.86)  # footage height on the canvas
-PHONE_Y = 96
+PHONE_Y = 176   # below the brand mark (top-left, y≈80-120)
 
 def probe(p):
     o = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=width,height:format=duration", "-of", "json", str(p)], capture_output=True, text=True).stdout
@@ -56,7 +56,7 @@ def build(ver):
     a_in = []
     for s in segs:
         inputs += ["-i", str(ROOT / "work" / ver / f"{s['id']}.mp3")]
-        fc.append(f"[{idx}:a]atrim=0:{s['speech'] + 0.3:.2f},adelay={int(s['start'] * 1000)}|{int(s['start'] * 1000)}[a{idx}]"); a_in.append(f"[a{idx}]"); idx += 1
+        fc.append(f"[{idx}:a]atrim={s.get('speech_start', 0):.2f}:{s.get('speech_end', s['speech']) + 0.25:.2f},asetpts=PTS-STARTPTS,adelay={int(s['start'] * 1000)}|{int(s['start'] * 1000)}[a{idx}]"); a_in.append(f"[a{idx}]"); idx += 1
     fc.append("".join(a_in) + f"amix=inputs={len(a_in)}:normalize=0,loudnorm=I=-16:TP=-1.5:LRA=11,apad=whole_dur={total:.2f}[aout]")
     fc.append(f"{last}fade=t=in:st=0:d=0.3,format=yuv420p[vout]")
     out = OUT / f"sente-intro-{ver[1:]}s.mp4"; tmp = OUT / f".{out.name}.part.mp4"

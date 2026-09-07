@@ -1,18 +1,104 @@
 {
-  "voice": {"api": "https://koe.live/api/speak", "user_id_env": "KOE_USER_ID", "lang": "ja"},
-  "targets": {"v30": 30.0, "v15": 15.0},
-  "v30": [
-    {"id": "hook",  "tts": "スマホから、ひとこと。", "cap": "スマホから、一言。", "sub": "", "scene": "phone_a", "min_end": 3.0, "weight": 1.0},
-    {"id": "mac1",  "tts": "自分のマックの、クロードコードや、", "cap": "自分のMacの Claude Code が動く。", "sub": "手配 → 完了待ち → 結果", "scene": "phone_a", "weight": 0.6},
-    {"id": "mac2",  "tts": "コーデックスが動いて、結果だけ返ってくる。", "cap": "Codex にも頼める。結果だけ、スマホに返ってくる。", "sub": "", "scene": "phone_c", "weight": 1.0},
-    {"id": "cloud", "tts": "マックが寝ていても、クラウドの作業箱が引き取る。", "cap": "Macが寝ていても、クラウドの作業箱が引き取る。", "sub": "Macがなくても、サーバーで動く", "scene": "phone_b", "weight": 1.0},
-    {"id": "cost",  "tts": "モデルは選べる。ジーエルエムなら、クロードの三分の一の値段で、ほぼ倍速い。安くて速いは、同じ予算で三倍の仕事。", "cap": "GLM-5.3 は Claude Sonnet 5 の約1/3の単価。約1.8倍速い。", "sub": "安くて速い = 同じ予算で3倍の仕事", "scene": "card_cost", "weight": 1.2},
-    {"id": "cta",   "tts": "せんて。この動画も、せんてが作りました。", "cap": "先手 ─ curl -fsSL https://teai.io/te | sh", "sub": "この動画も先手が作りました。プロンプトは説明欄に。", "scene": "card_cta", "weight": 1.6}
-  ],
-  "v15": [
-    {"id": "hook",  "tts": "スマホから、ひとこと。", "cap": "スマホから、一言。", "sub": "", "scene": "phone_a", "min_end": 3.0, "weight": 1.0},
-    {"id": "mac",   "tts": "自分のマックのクロードコードが動いて、結果だけ返ってくる。", "cap": "自分のMacの Claude Code が動く。", "sub": "結果だけ、スマホに返ってくる", "scene": "phone_a", "weight": 0.8},
-    {"id": "cost",  "tts": "ジーエルエムなら、クロードの三分の一で、ほぼ倍速い。", "cap": "GLM-5.3 は Claude Sonnet 5 の約1/3の単価・約1.8倍速。", "sub": "同じ予算で3倍の仕事", "scene": "card_cost", "weight": 1.0},
-    {"id": "cta",   "tts": "せんて。この動画も、せんてが作りました。", "cap": "先手 ─ curl -fsSL https://teai.io/te | sh", "sub": "この動画も先手が作りました。", "scene": "card_cta", "weight": 1.4}
-  ]
+ "voice": {
+  "api": "https://koe.live/api/speak",
+  "user_id_env": "KOE_USER_ID",
+  "lang": "ja"
+ },
+ "targets": {
+  "v30": 30.0,
+  "v15": 15.0
+ },
+ "min_segment_s": 3.0,
+ "v30": [
+  {
+   "id": "hook",
+   "tts": "スマホから、ひとこと。",
+   "cap": "スマホから、一言。",
+   "sub": "",
+   "scene": "phone_a",
+   "weight": 1.0
+  },
+  {
+   "id": "mac1",
+   "tts": "自分のマックの、クロードコードや、",
+   "cap": "自分のMacの Claude Code が動く。",
+   "sub": "手配 → 完了待ち → 結果",
+   "scene": "phone_a",
+   "weight": 0.6
+  },
+  {
+   "id": "mac2",
+   "tts": "コーデックスが動いて、結果だけ返ってくる。",
+   "cap": "Codex にも頼める。結果だけ、スマホに返ってくる。",
+   "sub": "",
+   "scene": "phone_c",
+   "weight": 0.8
+  },
+  {
+   "id": "cloud",
+   "tts": "マックが寝ていても、クラウドの作業箱が引き取る。",
+   "cap": "Macが寝ていても、クラウドの作業箱が引き取る。",
+   "sub": "Macがなくても、サーバーで動く",
+   "scene": "phone_b",
+   "weight": 1.0
+  },
+  {
+   "id": "cost",
+   "tts": "モデルは選べる。ジーエルエムなら、クロードの三分の一の値段で、ほぼ倍速い。安くて速いは、同じ予算で三倍の仕事。",
+   "cap": "GLM-5.3 は Claude Sonnet 5 の約1/3の単価。約1.8倍速い。",
+   "sub": "安くて速い = 同じ予算で3倍の仕事",
+   "scene": "card_cost",
+   "weight": 1.2
+  },
+  {
+   "id": "cta",
+   "tts": "せんて。この動画も、せんてが作りました。",
+   "cap": "先手 ─ curl -fsSL https://teai.io/te | sh",
+   "sub": "この動画も先手が作りました。プロンプトは説明欄に。",
+   "scene": "card_cta",
+   "weight": 1.6
+  }
+ ],
+ "v15": [
+  {
+   "id": "hook",
+   "tts": "スマホから、ひとこと。",
+   "cap": "スマホから、一言。",
+   "sub": "",
+   "scene": "phone_a",
+   "weight": 1.0
+  },
+  {
+   "id": "mac",
+   "tts": "マックの、クロードコードが動く。",
+   "cap": "自分のMacの Claude Code が動く。",
+   "sub": "結果だけ、スマホに返ってくる",
+   "scene": "phone_a",
+   "weight": 0.8
+  },
+  {
+   "id": "cloud",
+   "tts": "マックが寝ていても、クラウドが引き取る。",
+   "cap": "Macが寝ていても、クラウドの作業箱が引き取る。",
+   "sub": "",
+   "scene": "phone_b",
+   "weight": 0.8
+  },
+  {
+   "id": "cost",
+   "tts": "ジーエルエムなら、さんぶんのいちで、ほぼ倍速い。",
+   "cap": "GLM-5.3 は Claude Sonnet 5 の約1/3の単価・約1.8倍速。",
+   "sub": "同じ予算で3倍の仕事",
+   "scene": "card_cost",
+   "weight": 1.0
+  },
+  {
+   "id": "cta",
+   "tts": "せんてが、作りました。",
+   "cap": "先手 ─ curl -fsSL https://teai.io/te | sh",
+   "sub": "この動画も先手が作りました。",
+   "scene": "card_cta",
+   "weight": 1.4
+  }
+ ]
 }
