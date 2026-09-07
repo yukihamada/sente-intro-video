@@ -63,7 +63,19 @@ def weighted_len(text):
     t = re.sub(r"https?://\S+", "x" * 23, text)
     return sum(2 if ord(c) > 0x1100 else 1 for c in t)   # CJK & wide → 2, URLs → 23
 
+def load_env():
+    """Credentials: env vars, else ~/.config/twitter/.env (X_CONSUMER_KEY/SECRET + X_ACCESS_TOKEN/SECRET as used for @yukihamada)."""
+    f = pathlib.Path(os.environ.get("X_ENV_FILE", "~/.config/twitter/.env")).expanduser()
+    if f.exists():
+        for line in f.read_text().splitlines():
+            if "=" in line and not line.lstrip().startswith("#"):
+                k, v = line.split("=", 1); os.environ.setdefault(k.strip(), v.strip().strip('"'))
+    alias = {"X_API_KEY": "X_CONSUMER_KEY", "X_API_SECRET": "X_CONSUMER_SECRET", "X_ACCESS_SECRET": "X_ACCESS_TOKEN_SECRET"}
+    for k, v in alias.items():
+        if k not in os.environ and v in os.environ: os.environ[k] = os.environ[v]
+
 def main():
+    load_env()
     args = [a for a in sys.argv[1:] if not a.startswith("--")]; dry = "--dry-run" in sys.argv
     copy, video = pathlib.Path(args[0]).read_text(encoding="utf-8"), args[1]
     parts = [p.strip() for p in copy.split("\n---\n")]; tweet, reply = parts[0], (parts[1] if len(parts) > 1 else "")
