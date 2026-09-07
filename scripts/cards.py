@@ -94,6 +94,10 @@ def main():
             for seg in cfg[ver]:
                 if seg["scene"].startswith("phone"): shot(f"{ver}_{seg['id']}", third(seg))
         shot("cost", cost_card(compact=False)); shot("cost_compact", cost_card(compact=True)); shot("cta", cta_card())
+        # rounded-corner mask for the phone footage (white = keep). Scaled to the footage size by compose.py.
+        mpg = b.new_page(viewport={"width": 1206, "height": 2622}, device_scale_factor=1)
+        mpg.set_content('<style>html,body{margin:0;background:transparent}div{width:1206px;height:2622px;border-radius:120px;background:#fff}</style><div></div>')
+        mpg.screenshot(path=str(out / "phone_mask.png"), omit_background=True); print("  ", out / "phone_mask.png")
         b.close()
 
 if __name__ == "__main__": main()

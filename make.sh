@@ -13,14 +13,21 @@ has() { [[ " ${STEPS[*]} " == *" $1 "* ]]; }
 if has deps; then step "deps"
   command -v brew >/dev/null || { echo "Homebrew が必要: https://brew.sh"; exit 2; }
   for b in ffmpeg xcodegen; do command -v $b >/dev/null || brew install $b; done
-  python3 -c "import playwright" 2>/dev/null || python3 -m pip install -q playwright
+  python3 -c "import playwright" 2>/dev/null || python3 -m pip install -q playwright || python3 -m pip install -q --break-system-packages playwright
+  python3 -c "import mlx_whisper" 2>/dev/null || python3 -m pip install -q mlx-whisper || python3 -m pip install -q --break-system-packages mlx-whisper   # Apple Silicon: reading check of the narration
   python3 -m playwright install chromium >/dev/null 2>&1 || true
   command -v te >/dev/null || { echo "先手(te)を入れる: curl -fsSL https://teai.io/te | sh"; curl -fsSL https://teai.io/te | sh; }
+  mkdir -p ~/.config/sente/agent && cp agent/intro-video.md ~/.config/sente/agent/intro-video.md   # `te agent run intro-video` が使う定義(このリポジトリが正本)
   xcode-select -p >/dev/null || { echo "Xcode が必要"; exit 2; }
 fi
 
+# 録画済み(work/footage/*.mp4 同梱)があれば app/record は飛ばせる: SKIP_RECORD=1(sente-ios を持たない人はこちら)
+if [ "${SKIP_RECORD:-0}" = 1 ] && ls work/footage/phone_a.mp4 work/footage/phone_b.mp4 work/footage/phone_c.mp4 >/dev/null 2>&1; then
+  STEPS=("${STEPS[@]/app}"); STEPS=("${STEPS[@]/record}"); echo "SKIP_RECORD=1: 同梱の録画を使う"
+fi
+
 if has app; then step "Sente iOS をシミュレータ向けにビルド ($SENTE_IOS)"
-  [ -d "$SENTE_IOS" ] || git clone https://github.com/yukihamada/sente-ios "$SENTE_IOS"
+  [ -d "$SENTE_IOS" ] || git clone https://github.com/yukihamada/sente-ios "$SENTE_IOS" || { echo "sente-ios を clone できません(非公開)。SKIP_RECORD=1 で同梱の録画を使ってください"; exit 2; }
   ( cd "$SENTE_IOS" && xcodegen generate -q && xcodebuild -project Sente.xcodeproj -scheme Sente -destination 'generic/platform=iOS Simulator' \
       -derivedDataPath build-sim CODE_SIGNING_ALLOWED=NO build -quiet )
 fi

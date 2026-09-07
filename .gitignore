@@ -1,3 +1,5 @@
-work/
+work/*
+!work/footage/
+!work/footage/*.mp4
 out/
 __pycache__/
