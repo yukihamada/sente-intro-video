@@ -18,7 +18,7 @@
 curl -fsSL https://teai.io/te | sh
 
 # 動画を作る(依存 → Sente iOS をシミュレータでビルド → 台本で実走を録画 → 本人の声で読み上げ → カード → 合成 → 検証)
-git clone https://github.com/yukihamada/sente-intro-video && cd sente-intro-video
+git clone https://github.com/yukihamada/sente-intro-video && cd sente-intro-video   # public
 KOE_USER_ID=<koe.live のあなたのID> ./make.sh
 ```
 
